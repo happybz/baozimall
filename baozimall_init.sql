@@ -204,7 +204,7 @@ CREATE TABLE `baozimall_user` (
 --  Records of `baozimall_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `baozimall_user` VALUES ('1', 'admin', '427338237BD929443EC5D48E24FD2B1A', 'admin@happybaozimall.com', '13800138000', '问题', '答案', '1', '2016-11-06 16:56:45', '2017-04-04 19:27:36'), ('13', 'geely', '08E9A6EA287E70E7E3F7C982BF7923AC', 'geely@happybaozimall.com', '13800138000', '问题', '答案', '0', '2016-11-19 22:19:25', '2016-11-19 22:19:25'), ('17', 'rosen', '095AC193FE2212EEC7A93E8FEFF11902', 'rosen1@happybaozimall.com', '13800138000', '问题', '答案', '0', '2017-03-17 10:51:33', '2017-04-09 23:13:26'), ('21', 'soonerbetter', 'DE6D76FE7C40D5A1A8F04213F2BEFBEE', 'test06@happybaozimall.com', '13800138000', '105204', '105204', '0', '2017-04-13 21:26:22', '2017-04-13 21:26:22');
+INSERT INTO `baozimall_user` VALUES ('1', 'admin', 'B2165077D75744E6C2B75B7016A19960', 'admin@happybaozimall.com', '13800138000', '问题', '答案', '1', '2016-11-06 16:56:45', '2017-04-04 19:27:36'), ('13', 'baozi', 'FAAA0DD5632C6B963C7B7DBD45F59B57', 'baozi@happybaozimall.com', '13800138000', '问题', '答案', '0', '2016-11-19 22:19:25', '2016-11-19 22:19:25'), ('17', 'rosen', '18C45D7200FBEC00A3807F58D4EBBF9F', 'rosen1@happybaozimall.com', '13800138000', '问题', '答案', '0', '2017-03-17 10:51:33', '2017-04-09 23:13:26'), ('21', 'soonerbetter', 'C91A5E7BC51C2931E1A7EE347D73FCFD', 'test06@happybaozimall.com', '13800138000', '105204', '105204', '0', '2017-04-13 21:26:22', '2017-04-13 21:26:22');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
