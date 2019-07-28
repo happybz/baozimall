@@ -29,7 +29,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.baozimall.pojo.User" >
-    insert into baozimall_user (id, username, password, 
+    insert into baozimall_user (id, username, password,
       email, phone, question, 
       answer, role, create_time, 
       update_time)
@@ -151,4 +151,61 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- #{} 预编译，防止SQL注入 -->
+  <select id="checkUsername" resultType="int" parameterType="string" >
+    select count(1) from baozimall_user
+    where username = #{username}
+  </select>
+
+  <select id="checkEmail" resultType="int" parameterType="string" >
+    select count(1) from baozimall_user
+    where email = #{email}
+  </select>
+
+  <!-- 杜绝select * ，避免将来扩展列，查到不需要的字段，可使用Base_Column_List -->
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List" />
+    from baozimall_user
+    where username = #{username}
+    and password = #{password}
+  </select>
+
+  <select id="selectQuestionByUsername" resultType="string" parameterType="string">
+    select
+    question
+    from baozimall_user
+    where username = #{username}
+  </select>
+
+  <select id="checkAnswer" resultType="int" parameterType="map">
+    SELECT
+    count(1)
+    from baozimall_user
+    where username=#{username}
+    and question = #{question}
+    and answer = #{answer}
+  </select>
+
+  <update id="updatePasswordByUsername" parameterType="map">
+    update baozimall_user
+    SET password = #{passwordNew},update_time = now()
+    where username = #{username}
+  </update>
+
+  <select id="checkPassword" resultType="int" parameterType="map">
+    SELECT
+    count(1)
+    from baozimall_user
+    where password = #{password}
+    and id = #{userId}
+  </select>
+
+  <select id="checkEmailByUserId" resultType="int" parameterType="map">
+    select count(1) from baozimall_user
+    where email = #{email}
+    and id != #{userId}
+  </select>
+
 </mapper>
