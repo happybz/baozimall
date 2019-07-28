@@ -19,7 +19,6 @@
   </properties>
 
   <dependencies>
-
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-servlet-api</artifactId>
@@ -178,7 +177,6 @@
     </dependency>
 
     <!-- mybatis pager -->
-
     <dependency>
       <groupId>com.github.pagehelper</groupId>
       <artifactId>pagehelper</artifactId>
@@ -194,7 +192,6 @@
       <artifactId>jsqlparser</artifactId>
       <version>0.9.4</version>
     </dependency>
-
 
     <!-- alipay -->
     <dependency>
@@ -241,7 +238,6 @@
     </dependency>
   </dependencies>
 
-
   <build>
     <finalName>baozimall</finalName>
     <plugins>
@@ -271,8 +267,5 @@
         </configuration>
       </plugin>
     </plugins>
-
   </build>
-
-
 </project>
