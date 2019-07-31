@@ -183,7 +183,7 @@
       and user_id = #{userId}
   </delete>
 
-  <update id="updateByShipping" parameterType="com.mmall.pojo.Shipping">
+  <update id="updateByShipping" parameterType="com.baozimall.pojo.Shipping">
     update baozimall_shipping
     set
       receiver_name = #{receiverName,jdbcType=VARCHAR},

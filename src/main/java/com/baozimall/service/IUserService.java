@@ -3,9 +3,6 @@ package com.baozimall.service;
 import com.baozimall.common.ServerResponse;
 import com.baozimall.pojo.User;
 
-/**
- * Created by geely
- */
 public interface IUserService {
 
     ServerResponse<User> login(String username, String password);
