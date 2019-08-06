@@ -2,11 +2,11 @@ package com.baozimall.service.impl;
 
 import com.baozimall.common.Const;
 import com.baozimall.common.ServerResponse;
-import com.baozimall.common.TokenCache;
 import com.baozimall.dao.UserMapper;
 import com.baozimall.pojo.User;
 import com.baozimall.service.IUserService;
 import com.baozimall.util.MD5Util;
+import com.baozimall.util.RedisShardedPoolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,7 +95,7 @@ public class UserServiceImpl implements IUserService {
         if(resultCount>0){
             //说明问题及问题答案是这个用户的,并且是正确的
             String forgetToken = UUID.randomUUID().toString();
-            TokenCache.setKey(TokenCache.TOKEN_PREFIX+username,forgetToken);//将token放入本地缓存，username和token对应
+            RedisShardedPoolUtil.setEx(Const.TOKEN_PREFIX+username,forgetToken,60*60*12);
             return ServerResponse.createBySuccess(forgetToken);
         }else{
             return ServerResponse.createByErrorMessage("问题的答案错误");
@@ -111,7 +111,7 @@ public class UserServiceImpl implements IUserService {
             //用户不存在
             return ServerResponse.createByErrorMessage("用户不存在");
         }
-        String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX+username);
+        String token = RedisShardedPoolUtil.get(Const.TOKEN_PREFIX+username);
         if(org.apache.commons.lang3.StringUtils.isBlank(token)){
             return ServerResponse.createByErrorMessage("token无效或者过期");
         }
