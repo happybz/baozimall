@@ -9,8 +9,6 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <context:component-scan base-package="com.baozimall" annotation-config="true"/>
-
     <!-- 配置Spring文件时，将常量分离 -->
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -81,17 +79,17 @@
         <property name="basePackage" value="com.baozimall.dao"/>
     </bean>
 
-    <!-- 使用@Transactional进行声明式事务管理需要声明下面这行 -->
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
-    <!-- 事务管理 -->
-    <!-- MyBatis-Spring利用了存在于Spring中的DataSourceTransactionManager进行事务管理。
-    一旦Spring的PlatformTransactionManager配置好了,
-    就可以在Spring中以你通常的做法(@Transactional注解)来配置事务。
-    在事务处理期间,会创建一个单独的SqlSession对象，
-    当事务完成时,这个session会以合适的方式提交或回滚。 -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="rollbackOnCommitFailure" value="true"/>
-    </bean>
+<!--    &lt;!&ndash; 使用@Transactional进行声明式事务管理需要声明下面这行 &ndash;&gt;-->
+<!--    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />-->
+<!--    &lt;!&ndash; 事务管理 &ndash;&gt;-->
+<!--    &lt;!&ndash; MyBatis-Spring利用了存在于Spring中的DataSourceTransactionManager进行事务管理。-->
+<!--    一旦Spring的PlatformTransactionManager配置好了,-->
+<!--    就可以在Spring中以你通常的做法(@Transactional注解)来配置事务。-->
+<!--    在事务处理期间,会创建一个单独的SqlSession对象，-->
+<!--    当事务完成时,这个session会以合适的方式提交或回滚。 &ndash;&gt;-->
+<!--    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+<!--        <property name="dataSource" ref="dataSource"/>-->
+<!--        <property name="rollbackOnCommitFailure" value="true"/>-->
+<!--    </bean>-->
 
 </beans>

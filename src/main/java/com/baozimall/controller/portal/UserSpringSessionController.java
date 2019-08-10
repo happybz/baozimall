@@ -18,10 +18,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/user/springsession/")
 public class UserSpringSessionController {
 
-
     @Autowired
     private IUserService iUserService;
-
 
     /**
      * 用户登录
@@ -33,19 +31,11 @@ public class UserSpringSessionController {
     @RequestMapping(value = "login.do",method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<User> login(String username, String password, HttpSession session, HttpServletResponse httpServletResponse){
-
-        //测试全局异常
-//        int i = 0;
-//        int j = 666/i;
-
-
         ServerResponse<User> response = iUserService.login(username,password);
         if(response.isSuccess()){
-
             session.setAttribute(Const.CURRENT_USER,response.getData());
 //            CookieUtil.writeLoginToken(httpServletResponse,session.getId());
 //            RedisShardedPoolUtil.setEx(session.getId(), JsonUtil.obj2String(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
-
         }
         return response;
     }
@@ -56,59 +46,23 @@ public class UserSpringSessionController {
 //        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 //        CookieUtil.delLoginToken(httpServletRequest,httpServletResponse);
 //        RedisShardedPoolUtil.del(loginToken);
-
         session.removeAttribute(Const.CURRENT_USER);
-
         return ServerResponse.createBySuccess();
     }
 
     @RequestMapping(value = "get_user_info.do",method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session,HttpServletRequest httpServletRequest){
-
 //        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 //        if(StringUtils.isEmpty(loginToken)){
 //            return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
 //        }
 //        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
 //        User user = JsonUtil.string2Obj(userJsonStr,User.class);
-
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-
         if(user != null){
             return ServerResponse.createBySuccess(user);
         }
         return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
