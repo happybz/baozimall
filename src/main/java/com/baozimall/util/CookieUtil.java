@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class CookieUtil {
 
+    //tomcat 8 -> context.xml
+    //<CookieProcessor className="org.apache.tomcat.util.http.LegacyCookieProcessor"/>
     private final static String COOKIE_DOMAIN = ".baozimall.com";
     private final static String COOKIE_NAME = "baozimall_login_token";
 
