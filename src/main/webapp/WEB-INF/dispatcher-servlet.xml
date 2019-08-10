@@ -46,5 +46,16 @@
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
+    <mvc:interceptors>
+        <!-- 定义在这里的，所有的都会拦截-->
+        <mvc:interceptor>
+            <mvc:mapping path="/manage/**"/>
+<!--            <mvc:exclude-mapping path="/manage/user/login.do"/>-->
+            <!--可以通过exclude过滤不需要拦截的路径-->
+            <bean class="com.baozimall.controller.common.interceptor.AuthorityInterceptor" />
+        </mvc:interceptor>
+
+    </mvc:interceptors>
+
 
 </beans>

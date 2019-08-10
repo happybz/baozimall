@@ -26,15 +26,15 @@ public class AuthorityInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("preHandle");
+
         //请求中Controller中的方法名
         HandlerMethod handlerMethod = (HandlerMethod)handler;
 
         //解析HandlerMethod
-
         String methodName = handlerMethod.getMethod().getName();
         String className = handlerMethod.getBean().getClass().getSimpleName();
 
-        //解析参数,具体的参数key以及value是什么，我们打印日志
+        //解析参数,具体的参数key以及value是什么，打印日志
         StringBuffer requestParamBuffer = new StringBuffer();
         Map paramMap = request.getParameterMap();
         Iterator it = paramMap.entrySet().iterator();
@@ -55,12 +55,11 @@ public class AuthorityInterceptor implements HandlerInterceptor{
 
         if(StringUtils.equals(className,"UserManageController") && StringUtils.equals(methodName,"login")){
             log.info("权限拦截器拦截到请求,className:{},methodName:{}",className,methodName);
-            //如果是拦截到登录请求，不打印参数，因为参数里面有密码，全部会打印到日志中，防止日志泄露
+            //如果是拦截到登录请求，直接放行，不打印参数，因为参数里面有密码，全部会打印到日志中，防止日志泄露
             return true;
         }
 
         log.info("权限拦截器拦截到请求,className:{},methodName:{},param:{}",className,methodName,requestParamBuffer.toString());
-
 
         User user = null;
 
@@ -72,15 +71,15 @@ public class AuthorityInterceptor implements HandlerInterceptor{
 
         if(user == null || (user.getRole().intValue() != Const.Role.ROLE_ADMIN)){
             //返回false.即不会调用controller里的方法
-            response.reset();//geelynote 这里要添加reset，否则报异常 getWriter() has already been called for this response.
-            response.setCharacterEncoding("UTF-8");//geelynote 这里要设置编码，否则会乱码
-            response.setContentType("application/json;charset=UTF-8");//geelynote 这里要设置返回值的类型，因为全部是json接口。
+            response.reset();//这里要添加reset，否则报异常 getWriter() has already been called for this response.
+            response.setCharacterEncoding("UTF-8");//这里要设置编码，否则会乱码
+            response.setContentType("application/json;charset=UTF-8");//这里要设置返回值的类型，因为全部是json接口。
 
             PrintWriter out = response.getWriter();
 
             //上传由于富文本的控件要求，要特殊处理返回值，这里面区分是否登录以及是否有权限
             if(user == null){
-                if(StringUtils.equals(className,"ProductManageController") && StringUtils.equals(methodName,"richtextImgUpload")){
+                if(StringUtils.equals(className,"ProductManageController") && StringUtils.equals(methodName,"richtextImgUpload")){//富文本控件
                     Map resultMap = Maps.newHashMap();
                     resultMap.put("success",false);
                     resultMap.put("msg","请登录管理员");
@@ -89,7 +88,7 @@ public class AuthorityInterceptor implements HandlerInterceptor{
                     out.print(JsonUtil.obj2String(ServerResponse.createByErrorMessage("拦截器拦截,用户未登录")));
                 }
             }else{
-                if(StringUtils.equals(className,"ProductManageController") && StringUtils.equals(methodName,"richtextImgUpload")){
+                if(StringUtils.equals(className,"ProductManageController") && StringUtils.equals(methodName,"richtextImgUpload")){//富文本控件
                     Map resultMap = Maps.newHashMap();
                     resultMap.put("success",false);
                     resultMap.put("msg","无权限操作");
@@ -99,7 +98,7 @@ public class AuthorityInterceptor implements HandlerInterceptor{
                 }
             }
             out.flush();
-            out.close();//geelynote 这里要关闭
+            out.close();
 
             return false;
 
